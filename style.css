@@ -26,6 +26,50 @@ a {
     color: inherit;
 }
 
+/* Galaxy Background Stars */
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle infinite ease-in-out;
+}
+
+.star-img {
+    position: absolute;
+    opacity: 0.7;
+    animation: floatStar infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scale(0.5) translate(0, 0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1) translate(15px, -15px);
+    }
+}
+
+@keyframes floatStar {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    33% { transform: translate(40px, -60px) rotate(120deg) scale(1.2); }
+    66% { transform: translate(-30px, 40px) rotate(240deg) scale(0.8); }
+    100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
 /* Navbar */
 .navbar {
     display: flex;
@@ -487,32 +531,49 @@ h1 {
     gap: 1.5rem;
 }
 
-.contact-detail-item {
+.contact-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     font-size: 1.1rem;
     color: var(--text-secondary);
+    transition: all 0.3s ease;
 }
 
-.contact-detail-item i {
-    font-size: 1.5rem;
+.contact-item:hover {
+    transform: translateX(10px);
+}
+
+.contact-item i {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
     color: var(--accent);
+    transition: all 0.3s ease;
 }
 
-.contact-detail-item a {
+.contact-item:hover i {
+    background: var(--accent);
+    color: white;
+    transform: rotate(10deg);
+}
+
+.contact-item a {
     transition: color 0.3s ease;
 }
 
-.contact-detail-item a:hover {
-    color: var(--accent);
+.contact-item a:hover {
+    color: white;
 }
 
 .contact-form {
     flex: 1;
-    background: var(--card-bg);
-    padding: 3rem;
-    border-radius: 20px;
+    background: transparent;
 }
 
 form {
@@ -590,6 +651,15 @@ footer {
 }
 
 /* Animations */
+@keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.hexagon, .circle-img {
+    animation: gentleBounce 6s ease-in-out infinite;
+}
+
 .fade-up {
     opacity: 0;
     transform: translateY(30px);
@@ -663,14 +733,47 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 3.5rem; }
+    .about { gap: 2rem; }
+    .circle-img { width: 300px; height: 300px; }
+}
+
 @media (max-width: 768px) {
-    .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
+    .hero { flex-direction: column; text-align: center; padding-top: 8rem; }
     .hero-actions { justify-content: center; }
-    h1 { font-size: 3rem; }
+    h1 { font-size: 2.8rem; }
     .hexagon { width: 300px; height: 350px; margin-top: 2rem; }
     .nav-links { display: none; }
-    .about { flex-direction: column; text-align: center; }
+    
+    .about { flex-direction: column; text-align: center; padding: 5rem 5%; }
     .section-tag::after { display: none; }
-    .contact { flex-direction: column; }
-    .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .circle-img { width: 250px; height: 250px; }
+    
+    .services-grid { grid-template-columns: 1fr; }
+    
+    .projects { padding: 5rem 5%; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .projects-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    
+    .contact { flex-direction: column; padding: 5rem 5%; }
+    .contact-form { width: 100%; padding: 2rem; }
+    
+    footer { flex-direction: column; text-align: center; gap: 1.5rem; }
+    .footer-left { align-items: center; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 1rem; }
+    .hexagon { width: 250px; height: 300px; }
+    .download-circle { width: 100px; height: 100px; bottom: 10px; }
+    .download-icon { width: 45px; height: 45px; font-size: 1.2rem; }
+    
+    .circle-img { width: 200px; height: 200px; }
+    .project-img { height: 250px; }
+    .contact-content h2 { font-size: 2rem; }
+    .popup-content { padding: 2rem; }
 }
